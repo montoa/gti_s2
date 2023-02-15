@@ -1,0 +1,40 @@
+name: DemoNewCD
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-lastet
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, World!
+        
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'CLONE-ftpmetro.metroweb.sp.gov.br'
+    needs: build
+    steps:
+      - name: Run a one-line script
+        run: echo Deploy Dev
+  
+  deploy-hom:
+    runs-on: ubuntu-latest
+    environment:
+      name: hom
+      url: 'CLONE-ftpmetro.metroweb.sp.gov.br'
+    needs: deploy-dev
+    steps:
+      - name: Run a one-line script
+        run: echo Deploy hom
+    
+  deploy-prd:
+    runs-on: ubuntu-latest
+    environment:
+      name: prd
+      url: 'CLONE-ftpmetro.metroweb.sp.gov.br'
+    needs: deploy-hom
+    steps:
+      - name: Run a one-line script
+        run: echo Deploy prd
